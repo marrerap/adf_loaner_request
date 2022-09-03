@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Set Item Type field automatically for mobiles</description>
+        <field>cmdb_ci</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Set Loaner Item Type </name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+    if (isLoading)
+        return;
+// retrieve the record in the configuration item field and use a function 
+    g_form.getReference('cmdb_ci', checkName);
+// create a function that uses the CI 
+    function checkName(ci) {
+// 		store the name and add a space to allow for match method
+        var name = ci.name + '';
+// 		if name of the ci matches the following names listed set item type to mobile phone and set to readonly, also use regular expression to prevent case senstive errors
+        if (name.match(/.*blackberry.*/i) || name.match(/.*iphone.*/i) || name.match(/.*android.*/i)) {
+            g_form.setValue('item_type', 'cmdb_ci_mobile_device', 'Mobile Phone');
+            g_form.setReadOnly('item_type', true);
+// 			if name does not match, remove readonly mandatory, this covers accidental selection or change made to request
+        } else {
+            g_form.setReadOnly('item_type', false);
+        }
+    }
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-09-03 15:40:40</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>6b030d5cc87591107f4456430188e113</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Set Loaner Item Type </sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">58e4b880c8b551107f4456430188e1b5</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Request">58e4b880c8b551107f4456430188e1b5</sys_scope>
+        <sys_update_name>sys_script_client_6b030d5cc87591107f4456430188e113</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-09-03 16:15:36</sys_updated_on>
+        <table>x_cdltd_loaner_req_loaner_request</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
